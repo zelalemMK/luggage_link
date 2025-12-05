@@ -41,7 +41,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Trip routes
-  // ✅ Trip routes (fixed version)
   app.get("/api/trips", async (req, res) => {
     try {
       const filters: any = {};
@@ -84,7 +83,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ✅ Get trips by user (exactly like packages)
   app.get("/api/trips/user/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
@@ -97,7 +95,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
 
-  // ✅ Get a single trip
+
   app.get("/api/trips/:id", async (req, res) => {
     try {
       const tripId = parseInt(req.params.id);
@@ -129,7 +127,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ✅ Create trip
+
   app.post("/api/trips", async (req, res) => {
     if (!req.isAuthenticated()) {
       return res.status(401).json({ message: "Not authenticated" });
@@ -156,7 +154,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ✅ Update trip
+
   app.put("/api/trips/:id", async (req, res) => {
     if (!req.isAuthenticated()) {
       return res.status(401).json({ message: "Not authenticated" });
