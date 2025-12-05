@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: luggage-link-api
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.local.docker
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
+      PORT: 8080
+      DATABASE_URL: postgres://postgres:postgres@db:5432/luggage_local
+
+  db:
+    image: postgres:15
+    container_name: luggage-link-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: luggage_local
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

@@ -1,0 +1,66 @@
+{/* Message list */}
+                      <div className="flex-1 p-4 overflow-y-auto">
+                        {isLoadingMessages ? (
+                          <div className="flex justify-center items-center h-full">
+                            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                          </div>
+                        ) : messagesByDate.length > 0 ? (
+                          <div className="space-y-6">
+                            {messagesByDate.map((group) => (
+                              <div key={group.date}>
+                                <div className="relative flex items-center py-5">
+                                  <div className="flex-grow border-t border-gray-200"></div>
+                                  <span className="flex-shrink mx-4 text-xs text-gray-400">
+                                    {group.date}
+                                  </span>
+                                  <div className="flex-grow border-t border-gray-200"></div>
+                                </div>
+
+                                <div className="space-y-4">
+                                  {group.messages.map((message: any) => (
+                                    <div
+                                      key={message.id}
+                                      className={`flex ${
+                                        message.senderId === user.id ? "justify-end" : "justify-start"
+                                      }`}
+                                    >
+                                      <div
+                                        className={`max-w-[70%] rounded-lg p-3 ${
+                                          message.senderId === user.id
+                                            ? "bg-primary-600 text-white"
+                                            : "bg-gray-100 text-gray-800"
+                                        }`}
+                                      >
+                                        <p className="text-sm">{message.content}</p>
+                                        <div
+                                          className={`text-xs mt-1 ${
+                                            message.senderId === user.id
+                                              ? "text-primary-100"
+                                              : "text-gray-500"
+                                          }`}
+                                        >
+                                          {formatDate(message.createdAt, "p")}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center h-full text-center">
+                            <div className="bg-gray-100 rounded-full p-3 mb-4">
+                              <Send className="h-6 w-6 text-gray-400" />
+                            </div>
+                            <h3 className="text-lg font-medium text-gray-900 mb-1">
+                              Start a conversation
+                            </h3>
+                            <p className="text-sm text-gray-500 max-w-md">
+                              Send a message to start discussing delivery details, pricing, or
+                              any questions you might have.
+                            </p>
+                          </div>
+                        )}
+                      </div>
