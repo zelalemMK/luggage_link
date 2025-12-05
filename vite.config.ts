@@ -11,7 +11,6 @@ export default defineConfig({
   plugins: [
     react(),
     runtimeErrorOverlay(),
-    // Remove the async import block for cartographer (Replit only)
   ],
   resolve: {
     alias: {

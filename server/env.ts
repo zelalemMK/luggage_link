@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 export const DATABASE_URL =
-  process.env.POSTGRES_URL || "postgresql://postgres:zelalem@localhost:5432/luggagelink";
+  process.env.DATABASE_URL || "postgresql://postgres:zelalem@localhost:5432/luggagelink";
 
 export const PERSONA_API_KEY =
   process.env.PERSONA_API_KEY || "your_persona_api_key_here";
