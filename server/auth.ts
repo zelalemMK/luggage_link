@@ -6,7 +6,8 @@ import { storage } from "./storage";
 import { User as SelectUser } from "@shared/schema";
 import { initializeApp, cert } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { SESSION_SECRET } from "./env";
+import { SESSION_SECRET, firebaseConfig } from "./env";
+
 // import {
 //   DATABASE_URL,
 //   SESSION_SECRET,
@@ -23,7 +24,7 @@ declare global {
 }
 
 
-
+export const App = initializeApp(firebaseConfig); 
 const firebaseAuth = getAuth();
 
 // ------------------- Setup Auth -------------------

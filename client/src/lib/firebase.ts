@@ -12,9 +12,9 @@ const firebaseConfig = {
   measurementId: "G-PD7E6TLCKK",
 };
 
-
+// ✅ Only initialize once
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-
+// ✅ Export properly
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();

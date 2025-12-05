@@ -4,7 +4,6 @@ import { insertUserSchema, User as SelectUser, InsertUser } from "@shared/schema
 import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
-// ✅ Firebase imports
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/lib/firebase"; // make sure Firebase is initialized
 
@@ -98,7 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
   });
 
-  // --- ✅ Google Sign-In ---
+
   const loginWithGoogle = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -113,7 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const res = await apiRequest("POST", "/api/login/google", { idToken });
       const dbUser = await res.json();
 
-      // ✅ Update user in React Query cache
+
       queryClient.setQueryData(["/api/user"], dbUser);
 
       toast({
