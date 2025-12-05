@@ -25,9 +25,11 @@ app.use((req, res, next) => {
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
+
       if (logLine.length > 80) {
         logLine = logLine.slice(0, 79) + "…";
       }
+
       log(logLine);
     }
   });
@@ -41,41 +43,40 @@ app.use((req, res, next) => {
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
+
     res.status(status).json({ message });
     throw err;
   });
 
-  // Setup vite in development, serve static in production
+  // importantly only setup vite in development and after
+  // setting up all the other routes so the catch-all route
+  // doesn't interfere with the other routes
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
 
-  // ONLY listen when NOT in Vercel (serverless environment)
-  // Vercel sets NODE_ENV to 'production' and doesn't need server.listen()
-  if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
-    const port = process.env.PORT || 8080;
-    
-    server.on('error', (err: any) => {
-      if (err.code === 'EADDRINUSE') {
-        log(`Port ${port} is already in use. Attempting to close existing connections...`);
-        process.exit(1);
-      } else {
-        log(`Server error: ${err.message}`);
-        throw err;
-      }
-    });
+  // ALWAYS serve the app on port
+  // this serves both the API and the client.
+  // It is the only port that is not firewalled.
+const port = process.env.PORT || 8080;
+  
+  server.on('error', (err: any) => {
+    if (err.code === 'EADDRINUSE') {
+      log(`Port ${port} is already in use. Attempting to close existing connections...`);
+      process.exit(1);
+    } else {
+      log(`Server error: ${err.message}`);
+      throw err;
+    }
+  });
 
-    server.listen({
-      port,
-      host: "0.0.0.0",
-      reusePort: true,
-    }, () => {
-      log(`serving on port ${port}`);
-    });
-  }
+  server.listen({
+    port,
+    host: "0.0.0.0",
+    reusePort: true,
+  }, () => {
+    log(`serving on port ${port}`);
+  });
 })();
-
-// Export the Express app for Vercel
-export default app;
