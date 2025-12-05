@@ -6,13 +6,15 @@ import { storage } from "./storage";
 import { User as SelectUser } from "@shared/schema";
 import { initializeApp, cert } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import {
-  DATABASE_URL,
-  SESSION_SECRET,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_CLIENT_EMAIL,
-  FIREBASE_PRIVATE_KEY,
-} from "./env";
+import { SESSION_SECRET } from "./env";
+// import {
+//   DATABASE_URL,
+//   SESSION_SECRET,
+//   FIREBASE_PROJECT_ID,
+//   FIREBASE_CLIENT_EMAIL,
+//   FIREBASE_PRIVATE_KEY,
+// } from "./env";
+
 
 declare global {
   namespace Express {
@@ -20,14 +22,7 @@ declare global {
   }
 }
 
-// ------------------- Initialize Firebase Admin -------------------
-initializeApp({
-  credential: cert({
-    projectId: FIREBASE_PROJECT_ID,
-    clientEmail: FIREBASE_CLIENT_EMAIL,
-    privateKey: FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-  }),
-});
+
 
 const firebaseAuth = getAuth();
 

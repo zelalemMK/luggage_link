@@ -9,7 +9,7 @@ if (!getApps().length) {
   throw new Error("Firebase app not initialized. Please initialize in server/index.ts");
 }
 
-const app = initializeApp(firebaseConfig); 
+export const app = initializeApp(firebaseConfig); 
 
 export const adminAuth = getAuth(app);
 
