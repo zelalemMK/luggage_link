@@ -8,7 +8,7 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
 
   // Firebase UID (unique identifier from Firebase Authentication)
-  firebaseUid: text("firebase_uid").unique().notNull(), // ✅ should NOT be default(null)
+  firebaseUid: text("firebase_uid").unique().notNull(), // should NOT be default(null 
 
   // User credentials & profile info
   email: text("email").notNull().unique(),
