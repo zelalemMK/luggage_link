@@ -11,6 +11,6 @@ if (!getApps().length) {
 
 const app = initializeApp(firebaseConfig); 
 
-export const adminAuth = getAuth();
+export const adminAuth = getAuth(app);
 
 const analytics = getAnalytics();
